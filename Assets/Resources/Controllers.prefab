@@ -1,0 +1,126 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1970453725032130133
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1970453725032130128}
+  - component: {fileID: 1970453725032130142}
+  - component: {fileID: 1970453725032130131}
+  - component: {fileID: 1970453725032130130}
+  - component: {fileID: 1970453725032130129}
+  - component: {fileID: 1970453725032130143}
+  m_Layer: 0
+  m_Name: Controllers
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1970453725032130128
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1970453725032130133}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1970453725032130142
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1970453725032130133}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f02d0aad79cf1aa46900eb7f065f1180, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AmountOfEnemyes: 0
+--- !u!114 &1970453725032130131
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1970453725032130133}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 549f007429d53de4f85de19d038ed25c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TouchPosition: {x: 0, y: 0, z: 0}
+  DragingStarted: 0
+  UseMouse: 1
+--- !u!114 &1970453725032130130
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1970453725032130133}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6294e3adfd2476e46ba485ed2fc9fdc7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  WebSpeed: 2
+  StuckedWeb: {fileID: 5148378486662662931, guid: 94185bfaa30a10349bbbd2991f21c7d1, type: 3}
+  ShootingWeb: {fileID: 6963963498335505446, guid: 9d686cc8b8b14084bbb47ee08843dcec, type: 3}
+  RightHandAnimator: {fileID: 0}
+  LeftHandAnimator: {fileID: 0}
+  RightHandTransform: {fileID: 0}
+  LeftHandTransform: {fileID: 0}
+--- !u!114 &1970453725032130129
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1970453725032130133}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc4aa9ff6f07c764e9d09f7da7cd1a7d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Web: {fileID: 5148378486662662931, guid: 94185bfaa30a10349bbbd2991f21c7d1, type: 3}
+--- !u!114 &1970453725032130143
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1970453725032130133}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 404bc5950b9aac144a12111df6e9af10, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ArtPresets:
+  - EnemyMaterial: {fileID: 2100000, guid: cbe983d7754136945961e725550d24a8, type: 2}
+    BuildingMaterial: {fileID: 2100000, guid: e90a559254c4c3847a28ec416246745f, type: 2}
+    WindowsMaterial: {fileID: 2100000, guid: fc7abf0589182474396879ff270d6395, type: 2}
+    WebMaterial: {fileID: 2100000, guid: a4361ff88795f1d43a07382a1fec29cd, type: 2}
+  - EnemyMaterial: {fileID: 2100000, guid: 2f13b74c5a664474f883f0ee52e92a68, type: 2}
+    BuildingMaterial: {fileID: 2100000, guid: 50781542562d93a4ca4eb5ab6026df16, type: 2}
+    WindowsMaterial: {fileID: 2100000, guid: bb25d3c81f182e04ab7287003546b9d5, type: 2}
+    WebMaterial: {fileID: 2100000, guid: 30f35cbb2206d8648bbe7c1673ef4ba6, type: 2}
+  - EnemyMaterial: {fileID: 2100000, guid: cb24787d718c21a4991aaff50116c14b, type: 2}
+    BuildingMaterial: {fileID: 2100000, guid: af1f5d5470c2a724caf26117714f8d09, type: 2}
+    WindowsMaterial: {fileID: 2100000, guid: c69f5ce13c32c3e43a3324720aac54d2, type: 2}
+    WebMaterial: {fileID: 2100000, guid: 8cb09d6da589f184695a7b7bad65929b, type: 2}
+  - EnemyMaterial: {fileID: 2100000, guid: e39086f8b3c463142ad36f2c18916b85, type: 2}
+    BuildingMaterial: {fileID: 2100000, guid: f1da4691b1624914bafd5692d3c3e2cb, type: 2}
+    WindowsMaterial: {fileID: 2100000, guid: b769f71453c3af44d9625f7162ea267b, type: 2}
+    WebMaterial: {fileID: 2100000, guid: 1ade2949fe6005740b56a994b27c29af, type: 2}
