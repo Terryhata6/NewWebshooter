@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 public class ThrowingObject : MonoBehaviour
-{/*
+{
 	public GameObject SpiderWeb;
 	public bool IsStucked;
 	public bool IsCoin;
@@ -97,5 +97,5 @@ public class ThrowingObject : MonoBehaviour
 	public void SetForce(float force)
 	{
 		_throwingForce = force;
-	}*/
+	}
 }

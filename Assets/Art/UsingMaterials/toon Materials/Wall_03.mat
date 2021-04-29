@@ -57,7 +57,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     - _MainTex:
         m_Texture: {fileID: 2800000, guid: a055e78cd7c5ec04c8a69c0dafb14b3a, type: 3}
-        m_Scale: {x: 1.5, y: 1.5}
+        m_Scale: {x: 2, y: 2}
         m_Offset: {x: 10.39, y: 0}
     - _MaskGloss:
         m_Texture: {fileID: 0}
@@ -136,7 +136,7 @@ Material:
     - _GlossTextureSoftness: 0
     - _Glossiness: 0.5
     - _GlossyReflections: 1
-    - _HighlightColorPower: 1.1
+    - _HighlightColorPower: 0.8
     - _LightAffectOutlineColor: 0
     - _LightAffectRimLightColor: 0
     - _LightAffectShadow: 0
@@ -247,3 +247,4 @@ Material:
     - _SelfShadowRealTimeShadowColor: {r: 0.5377358, g: 0.5377358, b: 0.5377358, a: 1}
     - _ShadowTColor: {r: 1, g: 1, b: 1, a: 1}
     - _XYZPosition: {r: 0, g: 0, b: 0, a: 0}
+  m_BuildTextureStacks: []

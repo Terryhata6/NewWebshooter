@@ -100,5 +100,6 @@ public class Bomb : MonoBehaviour
 	{
 		FindObjectOfType<UIController>().SetGradientsAlpha(1, 0);
 		FindObjectOfType<MainGameController>().PlayerLose();
+		Destroy(this.gameObject);
 	}
 }

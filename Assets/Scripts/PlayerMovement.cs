@@ -143,7 +143,6 @@ public class PlayerMovement : MonoBehaviour
 		{
 			maxnum = TimesOfRotateZ;
 		}
-		Debug.Log(maxnum);
 		for (int i = 0; i < maxnum; i++)
 		{
 			if (i <= TimesOfRotateX)
