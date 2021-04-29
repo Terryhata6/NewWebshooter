@@ -43,7 +43,10 @@ public class GameEvents : MonoBehaviour
     {
         OnLevelFailed?.Invoke();
     }
-    
+
     #endregion
 
+    #region SkinShop
+
+    #endregion
 }
