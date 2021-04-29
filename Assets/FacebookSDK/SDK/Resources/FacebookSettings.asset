@@ -16,9 +16,9 @@ MonoBehaviour:
   clientTokens:
   - 
   appIds:
-  - 0
+  - 263685355323386
   appLabels:
-  - App Name
+  - Webshooter 3D
   cookie: 1
   logging: 1
   status: 1

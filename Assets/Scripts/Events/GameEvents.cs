@@ -45,8 +45,11 @@ public class GameEvents : MonoBehaviour
     }
 
     #endregion
-
     #region SkinShop
-
+    public Action<IGetReward> OnAskingRewardedVideo;
+    public void AskingRewardedVideo(IGetReward reward)
+    {
+        OnAskingRewardedVideo?.Invoke(reward);
+    }
     #endregion
 }
