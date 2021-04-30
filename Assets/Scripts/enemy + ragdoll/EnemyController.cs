@@ -143,18 +143,21 @@ public class EnemyController : MonoBehaviour
 	}
 	public void ThrowEnemy(Vector3 impulsePosition)
 	{
-		IsEnemyActive = false;
-		_mainGameController.EnemyBeenDefeated();
-		_throwingVector = transform.position;
-		_throwingVector.z = (transform.position.z - impulsePosition.z) * 1000f;
-		_throwingVector.x = (transform.position.x - impulsePosition.x) * 1000f;
-		_throwingVector.y = 0f;
-		TurnOnRagdoll();
-		for (int i = 0; i < _ragdollRigidBodyes.Length; i++)
+		if (IsEnemyActive)
 		{
-			_ragdollRigidBodyes[i].AddForce(_throwingVector * 1.5f);
+			IsEnemyActive = false;
+			_mainGameController.EnemyBeenDefeated();
+			_throwingVector = transform.position;
+			_throwingVector.z = (transform.position.z - impulsePosition.z) * 1000f;
+			_throwingVector.x = (transform.position.x - impulsePosition.x) * 1000f;
+			_throwingVector.y = 0f;
+			TurnOnRagdoll();
+			for (int i = 0; i < _ragdollRigidBodyes.Length; i++)
+			{
+				_ragdollRigidBodyes[i].AddForce(_throwingVector * 1.5f);
+			}
+			HipsRigidBody.AddForce(_throwingVector * 4f);
 		}
-		HipsRigidBody.AddForce(_throwingVector * 4f);
 	}
 	public void ActivateEnemy()
 	{

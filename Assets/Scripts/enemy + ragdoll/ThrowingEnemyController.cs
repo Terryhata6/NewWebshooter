@@ -43,6 +43,8 @@ public class ThrowingEnemyController : MonoBehaviour
 	private bool _isStucked;
 	private bool _needToWalk = false;
 	private bool _isEnemyWebbed = false;
+	private bool _bombThrown = false;
+	private bool _bombDetonated = false;
 	[HideInInspector] public bool IsEnemyActive = false;
 	[HideInInspector] public bool IsEnemyAttacking = false;
 	private void Start()
@@ -113,6 +115,12 @@ public class ThrowingEnemyController : MonoBehaviour
 	{
 		if (collision.gameObject.CompareTag(TagManager.GetTag(TagType.Web)) && IsEnemyActive)
 		{
+			if (!_bombThrown)
+			{
+				_bombDetonated = true;
+				Bomb.GetComponent<Bomb>().DetonateBomb();
+			}
+
 			IsEnemyActive = false; _isEnemyWebbed = true;
 			_mainGameController.EnemyBeenDefeated();
 			SphereCollider collider = collision.gameObject.GetComponent<SphereCollider>();
@@ -151,10 +159,14 @@ public class ThrowingEnemyController : MonoBehaviour
 	}
 	private void ThrowBomb()
 	{
-		_bombCollider.isTrigger = false;
-		if (IsEnemyActive)
+		if (!_bombDetonated)
 		{
-			Bomb.GetComponent<Bomb>().ThrowBomb(MovementCurve, _playerTransform, BombSpeed, BombMaxHeight);
+			_bombThrown = true;
+			_bombCollider.isTrigger = false;
+			if (IsEnemyActive)
+			{
+				Bomb.GetComponent<Bomb>().ThrowBomb(MovementCurve, _playerTransform, BombSpeed, BombMaxHeight);
+			}
 		}
 	}
 	private void StartWalking()
@@ -167,18 +179,26 @@ public class ThrowingEnemyController : MonoBehaviour
 	}
 	public void ThrowEnemy(Vector3 impulsePosition)
 	{
-		IsEnemyActive = false;
-		_mainGameController.EnemyBeenDefeated();
-		ThrowingVector = transform.position;
-		ThrowingVector.z = (transform.position.z - impulsePosition.z) * 1000f;
-		ThrowingVector.x = (transform.position.x - impulsePosition.x) * 1000f;
-		ThrowingVector.y = 0f;
-		TurnOnRagdoll();
-		for (int i = 0; i < _ragdollRigidBodyes.Length; i++)
+		if (!_bombThrown && !_bombDetonated)
 		{
-			_ragdollRigidBodyes[i].AddForce(ThrowingVector * 1.5f);
+			_bombDetonated = true;
+			Bomb.GetComponent<Bomb>().DetonateBomb();
 		}
-		HipsRigidBody.AddForce(ThrowingVector * 4f);
+		if (IsEnemyActive)
+		{
+			IsEnemyActive = false;
+			_mainGameController.EnemyBeenDefeated();
+			ThrowingVector = transform.position;
+			ThrowingVector.z = (transform.position.z - impulsePosition.z) * 1000f;
+			ThrowingVector.x = (transform.position.x - impulsePosition.x) * 1000f;
+			ThrowingVector.y = 0f;
+			TurnOnRagdoll();
+			for (int i = 0; i < _ragdollRigidBodyes.Length; i++)
+			{
+				_ragdollRigidBodyes[i].AddForce(ThrowingVector * 1.5f);
+			}
+			HipsRigidBody.AddForce(ThrowingVector * 4f);
+		}
 	}
 	private void OnTriggerExit(Collider other)
 	{

@@ -3,13 +3,14 @@ using UnityEngine;
 
 public class SaveController : MonoBehaviour
 {
+	public int AmountOfLvlsBeforeBonus;
 	public bool IsRandom;
 
 	private MainGameController _gameController;
 	private string _roundForPlaying = "LvlNum";
 	private string _allRoundsForPlaying = "LvlBase";
 	private string _notBonusLvlsCounter = "BasicLvls";
-	//private string _bonusLvlsCounter = "BonusLvls";
+	private string _bonusLvlsCounter = "BonusLvls";
 	private char[] _currentLvlBase;
 	private int _currentLvlNum;
 
@@ -26,6 +27,7 @@ public class SaveController : MonoBehaviour
 			string LVLBase = new string(lvlBaseNumbers);
 			PlayerPrefs.SetString(_allRoundsForPlaying, LVLBase);
 			PlayerPrefs.SetInt(_roundForPlaying, 0);
+			PlayerPrefs.SetInt(_notBonusLvlsCounter, 0);
 		}
 		if (PlayerPrefs.GetInt(_roundForPlaying) != _gameController.AvailableLevels.Length)
 		{
@@ -36,7 +38,6 @@ public class SaveController : MonoBehaviour
 			IsRandom = true;
 		}
 	}
-
 	public int GetNextLvlNum()
 	{
 		_gameController = FindObjectOfType<MainGameController>();
@@ -96,49 +97,33 @@ public class SaveController : MonoBehaviour
 	{
 		return _currentLvlNum;
 	}
-	public void SaveCurrentLvl()
+	public void SaveCurrentLvl(bool isBonusLvl)
 	{
-		PlayerPrefs.SetInt(_notBonusLvlsCounter, PlayerPrefs.GetInt(_notBonusLvlsCounter) + 1);
-		if (IsRandom)
+		if (isBonusLvl)
 		{
-			_currentLvlBase[_currentLvlNum] = Convert.ToChar("1");
-			string LVLBase = new string(_currentLvlBase);
-			PlayerPrefs.SetString(_allRoundsForPlaying, LVLBase);
+			PlayerPrefs.SetInt(_notBonusLvlsCounter, 0);
 		}
 		else
 		{
-			PlayerPrefs.SetInt(_roundForPlaying, PlayerPrefs.GetInt(_roundForPlaying) + 1);
+			PlayerPrefs.SetInt(_notBonusLvlsCounter, PlayerPrefs.GetInt(_notBonusLvlsCounter) + 1);
+			if (IsRandom)
+			{
+				_currentLvlBase[_currentLvlNum] = Convert.ToChar("1");
+				string LVLBase = new string(_currentLvlBase);
+				PlayerPrefs.SetString(_allRoundsForPlaying, LVLBase);
+			}
+			else
+			{
+				PlayerPrefs.SetInt(_roundForPlaying, PlayerPrefs.GetInt(_roundForPlaying) + 1);
+			}
 		}
 	}
-
-	//елси будут бонусные уровни
-	/*public void SaveCurrentBonusLvl()
+	public bool IsItTimeForBonusLvl()
 	{
-		PlayerPrefs.SetInt(_notBonusLvlsCounter, 0);
-		if (PlayerPrefs.GetInt(_bonusLvlsCounter) == _gameController.BonusLvlPresets.Length - 1)
-		{
-			PlayerPrefs.SetInt(_bonusLvlsCounter, 0);
-		}
-		else
-		{
-			PlayerPrefs.SetInt(_bonusLvlsCounter, PlayerPrefs.GetInt(_bonusLvlsCounter) + 1);
-		}
-
-	}
-	public bool IsNextLvlBonus()
-	{
-		if (PlayerPrefs.GetInt(_notBonusLvlsCounter) == 3)
+		if (PlayerPrefs.GetInt(_notBonusLvlsCounter) >= AmountOfLvlsBeforeBonus)
 		{
 			return true;
 		}
-		else
-		{
-			return false;
-		}
+		return false;
 	}
-	public int GetBonusLvlNum()
-	{
-		_currentLvlNum = PlayerPrefs.GetInt(_bonusLvlsCounter);
-		return PlayerPrefs.GetInt(_bonusLvlsCounter);
-	}*/
 }

@@ -13,33 +13,32 @@ public class ArtController : MonoBehaviour
 	private string _presetNumPlayerPref = "PresetNum";
 
 
-
 	[Button]
-	public void ChangeColor()
+	public void SetMaterials()
 	{
-		SelectPreset();
+		_presetNum = PlayerPrefs.GetInt(_presetNumPlayerPref);
 		ChangeEnemyesMaterial();
 		ChangeBuildingsMaterial();
 	}
-	private void SelectPreset()
+	public void ChangeMaterials()
 	{
 		try
 		{
 			if (PlayerPrefs.GetInt(_presetNumPlayerPref) == ArtPresets.Length - 1)
 			{
-				_presetNum = PlayerPrefs.GetInt(_presetNumPlayerPref);
+				//_presetNum = PlayerPrefs.GetInt(_presetNumPlayerPref);
 				PlayerPrefs.SetInt(_presetNumPlayerPref, 0);
 			}
-			else 
+			else
 			{
-				_presetNum = PlayerPrefs.GetInt(_presetNumPlayerPref);
+				//_presetNum = PlayerPrefs.GetInt(_presetNumPlayerPref);
 				PlayerPrefs.SetInt(_presetNumPlayerPref, PlayerPrefs.GetInt(_presetNumPlayerPref) + 1);
 			}
 		}
 		catch
 		{
 			PlayerPrefs.SetInt(_presetNumPlayerPref, 0);
-			_presetNum = PlayerPrefs.GetInt(_presetNumPlayerPref);
+			//_presetNum = PlayerPrefs.GetInt(_presetNumPlayerPref);
 		}
 	}
 	private void ChangeEnemyesMaterial()
@@ -81,7 +80,7 @@ public class ArtController : MonoBehaviour
 		_newMaterials[0] = ArtPresets[_presetNum].BuildingMaterial;
 		_newMaterials[1] = ArtPresets[_presetNum].WindowsMaterial;
 		_buildingRenderer.materials = _newMaterials;
-		
+
 		_changingObject = Resources.Load<GameObject>(PrefabAssetPath.LevelParts["BuildingCube"]);
 		_buildingRenderer = _changingObject.GetComponentInChildren<MeshRenderer>();
 		_newMaterials = _buildingRenderer.sharedMaterials;

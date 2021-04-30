@@ -11,6 +11,7 @@ public class MainGameController : MonoBehaviour
 	private LVLBuilder _lvlBuilder;
 	private CoinsController _coinsController;
 	private HealthController _healthController;
+	private BonusLvlController _bonusLvlController;
 	private int AmountOfEnemyes;
 	private float _timeBeforeContinueMoving = 0.5f;
 	private bool _isFinal;
@@ -18,6 +19,7 @@ public class MainGameController : MonoBehaviour
 	private void Awake()
 	{
 		Time.timeScale = 1f;
+		_bonusLvlController = FindObjectOfType<BonusLvlController>();
 		_playerMovement = FindObjectOfType<PlayerMovement>();
 		_artController = FindObjectOfType<ArtController>();
 		_uiController = FindObjectOfType<UIController>();
@@ -29,9 +31,18 @@ public class MainGameController : MonoBehaviour
 	}
 	public void StartLvl()
 	{
-		_artController.ChangeColor();
-		_playerMovement.SetMovementPoints(_lvlBuilder.BuildLvlAndReturnMovementPoints(AvailableLevels[_saveController.GetNextLvlNum()]));
-		_playerMovement.StartMoving();
+		_artController.SetMaterials();
+		if (_saveController.IsItTimeForBonusLvl())
+		{
+			_bonusLvlController.StartBonusPart();
+			_artController.ChangeMaterials();
+			Debug.Log("BonusLVL");
+		}
+		else
+		{
+			_playerMovement.SetMovementPoints(_lvlBuilder.BuildLvlAndReturnMovementPoints(AvailableLevels[_saveController.GetNextLvlNum()]));
+			_playerMovement.StartMoving();
+		}
 	}
 	public bool CanMove()
 	{
@@ -53,7 +64,7 @@ public class MainGameController : MonoBehaviour
 		_isFinal = true;
 		if (noEnemyes)
 		{
-			EndLVL();
+			PlayerWin();
 		}
 	}
 	public void ActivateEnemyes(GameObject[] enemyes, bool needToCountEnemyes)
@@ -86,7 +97,7 @@ public class MainGameController : MonoBehaviour
 				Invoke("ContinueMoving", _timeBeforeContinueMoving);
 				if (_isFinal)
 				{
-					Invoke("EndLVL", _timeBeforeContinueMoving);
+					Invoke("PlayerWin", _timeBeforeContinueMoving);
 				}
 			}
 		}
@@ -100,11 +111,19 @@ public class MainGameController : MonoBehaviour
 	{
 		_playerMovement.ContinueMoving();
 	}
-	private void EndLVL()
+	private void PlayerWin()
 	{
 		_lvlComplete = true;
 		int CoinsNum = Random.Range(40, 71);
-		_saveController.SaveCurrentLvl();
+		_saveController.SaveCurrentLvl(false);
+		_uiController.ActivateWinPanel(CoinsNum);
+		_coinsController.AddCoins(CoinsNum);
+	}
+	public void EndBonusLvl(int amountOfCoinsCaught)
+	{
+		_lvlComplete = true;
+		int CoinsNum = amountOfCoinsCaught;
+		_saveController.SaveCurrentLvl(true);
 		_uiController.ActivateWinPanel(CoinsNum);
 		_coinsController.AddCoins(CoinsNum);
 	}

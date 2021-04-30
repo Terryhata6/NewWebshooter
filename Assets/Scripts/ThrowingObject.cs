@@ -6,6 +6,7 @@ public class ThrowingObject : MonoBehaviour
 	public bool IsStucked;
 	public bool IsCoin;
 
+	[HideInInspector] public BonusLvlController bonusLvlController;
 	private Rigidbody _rigidbody;
 	private GameObject Web;
 	private Vector3 CustomWebPosition;
@@ -14,15 +15,11 @@ public class ThrowingObject : MonoBehaviour
 	private float _throwingForce = 3000f;
 	private bool IsObjectStucked;
 	private bool IsObjectedWebed;
-
-	private float _magicNumber = 0.1f;
-
 	public bool NeedToRotate = true;
 	private void Awake()
 	{
 		IsStucked = false;
 		_rigidbody = GetComponent<Rigidbody>();
-		//_rigidbody.isKinematic = true;
 		CustomWebPosition = new Vector3(0, 0, -0.3f);
 
 		int num1 = Random.Range(0, 3);
@@ -53,13 +50,11 @@ public class ThrowingObject : MonoBehaviour
 			collider.isTrigger = true;
 			IsObjectedWebed = true;
 			ThrowingVector = transform.position;
-			ThrowingVector.z = 3000f;
+			ThrowingVector.z = 4500f;
 			ThrowingVector.x = (transform.position.x - collision.transform.position.x) * 1000;
 			ThrowingVector.y = (transform.position.y - collision.transform.position.y) * 2500;
 			_rigidbody.AddForce(ThrowingVector);
 		}
-
-
 	}
 	private void GetObjectStucked(Collision collision)
 	{
@@ -69,25 +64,7 @@ public class ThrowingObject : MonoBehaviour
 		IsStucked = true;
 		Web = Instantiate(SpiderWeb, transform.position + CustomWebPosition, Quaternion.identity);
 		Web.transform.Rotate(new Vector3(0, 180f, Random.Range(0, 360f)));
-		 
-		if (collision.transform.position.y - collision.GetContact(0).point.y <= _magicNumber)
-		{
-			if (collision.GetContact(0).point.z - collision.transform.position.z <= _magicNumber)
-			{
-				if (collision.GetContact(0).point.x > collision.transform.position.x)
-				{
-					Web.transform.rotation = Quaternion.Euler(Web.transform.rotation.eulerAngles + new Vector3(0, 90f, 0));
-				}
-				else
-				{
-					Web.transform.rotation = Quaternion.Euler(Web.transform.rotation.eulerAngles + new Vector3(0, -90f, 0));
-				}
-			}
-		}
-		else
-		{
-			//Web.transform.rotation = Quaternion.Euler(Web.transform.rotation.eulerAngles + new Vector3(-90f, 0, 0));
-		}
+		bonusLvlController.CaughtCoin();
 	}
 	public void TrowObjectUp()
 	{
