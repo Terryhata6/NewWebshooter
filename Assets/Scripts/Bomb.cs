@@ -20,6 +20,7 @@ public class Bomb : MonoBehaviour
 	private float _startingHeight;
 	private ParticlesController _particlesController;
 
+	private bool _isDetonated = false;
 	public bool NeedToRotate = true;
 	private void Awake()
 	{
@@ -50,24 +51,28 @@ public class Bomb : MonoBehaviour
 			DetonateBomb();
 		}
 	}
-	private void DetonateBomb()
+	public void DetonateBomb()
 	{
-		_particlesController.MakeSmallExplosion(transform.position);
-		Collider[] sds = Physics.OverlapSphere(transform.position, 11f, _enemyLayer);
-		for (int i = 0; i < sds.Length; i++)
+		if (!_isDetonated)
 		{
-			try
+			_isDetonated = true;
+			_particlesController.MakeSmallExplosion(transform.position);
+			Collider[] sds = Physics.OverlapSphere(transform.position, 8f, _enemyLayer);
+			for (int i = 0; i < sds.Length; i++)
 			{
-				sds[i].GetComponent<ThrowingEnemyController>().ThrowEnemy(transform.position);
+				try
+				{
+					sds[i].GetComponent<ThrowingEnemyController>().ThrowEnemy(transform.position);
+				}
+				catch { }
+				try
+				{
+					sds[i].GetComponent<EnemyController>().ThrowEnemy(transform.position);
+				}
+				catch { }
 			}
-			catch { }
-			try
-			{
-				sds[i].GetComponent<EnemyController>().ThrowEnemy(transform.position);
-			}
-			catch { }
+			Destroy(this.gameObject);
 		}
-		Destroy(this.gameObject);
 	}
 	public void ThrowBomb(AnimationCurve curve, Transform destinationTransform, float speed, float maxHeight)
 	{
