@@ -15,6 +15,9 @@ public class SDKController : MonoBehaviour
     private float _lastInterstitialTime;
     public static IGetReward RewardInstance = null;
 
+    private int _currentLevelNumber = 1;
+    private int _previousLevelNumber = -1;
+    private float _startLevelTime = 0f;
     private void Start()
     {
         GameAnalyticsInitialize();
@@ -22,6 +25,7 @@ public class SDKController : MonoBehaviour
 
         SubscribeInterstitialEvents();
         SubscribeRewardedEvents();
+        SubscribeGameAnalyticEvent();
     }
 
 
@@ -32,8 +36,16 @@ public class SDKController : MonoBehaviour
         GameAnalytics.Initialize();
     }
 
-    private void OnLevelStartEvent()
+    private void OnLevelStartEvent(int levelNumber)
     {
+        if (_previousLevelNumber != -1)
+        { 
+            GameAnalytics.NewDesignEvent($"LevelTime:{_previousLevelNumber}", Time.time - _startLevelTime);
+        }
+        _previousLevelNumber = _currentLevelNumber;
+        _currentLevelNumber = levelNumber;
+        GameAnalytics.NewDesignEvent($"Level:Start:{_currentLevelNumber}");
+
         /*
         GameAnalytics.NewProgressionEvent(GAProgressionStatus.Start,
             $"Lvl:{_saveData.LoadInt(SaveKeyManager.LevelNumber)}",
@@ -41,8 +53,10 @@ public class SDKController : MonoBehaviour
             $"Overall: {_saveData.LoadInt(SaveKeyManager.ComplitedLevelValue)}");*/
     }
 
-    private void OnLevelFailEvent()
-    {/*
+    private void OnLevelFailedEvent()
+    {
+        GameAnalytics.NewDesignEvent($"Level:Failed:{_currentLevelNumber}");
+        /*
         GameAnalytics.NewProgressionEvent(GAProgressionStatus.Fail,
                 $"Lvl:{_saveData.LoadInt(SaveKeyManager.LevelNumber)}",
                 $"Diff: {_saveData.LoadInt(SaveKeyManager.Difficulty)}",
@@ -50,12 +64,23 @@ public class SDKController : MonoBehaviour
     }
 
     private void OnLevelCompleteEvent()
-    {/*
+    {
+        GameAnalytics.NewDesignEvent($"Level:Complete:{_currentLevelNumber}");
+        /*
         GameAnalytics.NewProgressionEvent(GAProgressionStatus.Complete,
                 $"Lvl:{_saveData.LoadInt(SaveKeyManager.LevelNumber)}",
                 $"Diff: {_saveData.LoadInt(SaveKeyManager.Difficulty)}",
                 $"Overall: {_saveData.LoadInt(SaveKeyManager.ComplitedLevelValue)}");*/
     }
+
+    private void SubscribeGameAnalyticEvent()
+    {
+        GameEvents.Current.OnLevelStart += OnLevelStartEvent;
+        GameEvents.Current.OnLevelComplete += OnLevelCompleteEvent;
+        GameEvents.Current.OnLevelFailed += OnLevelFailedEvent;
+    }
+
+
     #endregion
     #region FacebookSDK
     private void FacebookInitialize()
@@ -136,9 +161,10 @@ public class SDKController : MonoBehaviour
     {
         if (IronSource.Agent.isInterstitialReady())
         {
-            IronSource.Agent.showInterstitial();
-            GameAnalytics.NewAdEvent(GAAdAction.Show, GAAdType.Interstitial, "IronSource", "EndLevel");
             _lastInterstitialTime = Time.time;
+            IronSource.Agent.showInterstitial();
+            GameAnalytics.NewDesignEvent($"Ad:interstitial:{_currentLevelNumber}");
+            GameAnalytics.NewAdEvent(GAAdAction.Show, GAAdType.Interstitial, "IronSource", "EndLevel");
         }
         else
         {
@@ -214,6 +240,8 @@ public class SDKController : MonoBehaviour
         if (IronSource.Agent.isRewardedVideoAvailable())
         {
             IronSource.Agent.showRewardedVideo();
+            GameAnalytics.NewDesignEvent($"Ad:Rewarded:{RewardInstance.EventName()}:{_currentLevelNumber}");
+            
         }
     }
 

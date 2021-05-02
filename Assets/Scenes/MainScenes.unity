@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44692445, g: 0.4968105, b: 0.5750195, a: 1}
+  m_IndirectSpecularColor: {r: 0.4469208, g: 0.4968046, b: 0.57501686, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -5531,6 +5531,18 @@ PrefabInstance:
     - target: {fileID: 3543118150061861375, guid: ed217da53ff97b541a963ef9dbc16ee6, type: 3}
       propertyPath: m_Name
       value: EventsAndSdk
+      objectReference: {fileID: 0}
+    - target: {fileID: 7655210727794338246, guid: ed217da53ff97b541a963ef9dbc16ee6, type: 3}
+      propertyPath: _ISIOSAppKey
+      value: f6782999
+      objectReference: {fileID: 0}
+    - target: {fileID: 7655210727794338246, guid: ed217da53ff97b541a963ef9dbc16ee6, type: 3}
+      propertyPath: _currentAppKey
+      value: f6782999
+      objectReference: {fileID: 0}
+    - target: {fileID: 7655210727794338246, guid: ed217da53ff97b541a963ef9dbc16ee6, type: 3}
+      propertyPath: _ISAndroidAppKey
+      value: f6782999
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ed217da53ff97b541a963ef9dbc16ee6, type: 3}
